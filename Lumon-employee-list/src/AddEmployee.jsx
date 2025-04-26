@@ -19,7 +19,7 @@ function AddEmployee({ show, onClose, addEmployee }) {
       employeeName,
       employeeRole,
       employeeFavReward,
-      employeeDescription
+      employeeDescription,
     };
     addEmployee(newEmployee);
     // sets fields back to nothing
@@ -31,9 +31,9 @@ function AddEmployee({ show, onClose, addEmployee }) {
   };
 
   // updates the cards image
-  const imageUpdate = e => setEmployeeImage(e.target.files[0]);
+  const imageUpdate = (e) => setEmployeeImage(e.target.files[0]);
 
-  const handleSave = e => {
+  const handleSave = (e) => {
     e.preventDefault();
     doWork();
   };
@@ -46,55 +46,59 @@ function AddEmployee({ show, onClose, addEmployee }) {
       <Modal.Body>
         <form id="employeeForm" onSubmit={handleSave}>
           <div className="mb-2">
-            <label htmlFor="fileUpload" className="form-label">Image File</label>
-            <input
-              type="file"
-              id="fileUpload"
-              onChange={imageUpdate}
-              className="form-control"
-              required
-            />
+            <label htmlFor="fileUpload" className="form-label">
+              Image File
+            </label>
+            <input type="file" id="fileUpload" onChange={imageUpdate} className="form-control" required />
           </div>
           <div className="mb-2">
-            <label htmlFor="employeeName" className="form-label">Name</label>
+            <label htmlFor="employeeName" className="form-label">
+              Name
+            </label>
             <input
               id="employeeName"
               type="text"
               value={employeeName}
-              onChange={e => setEmployeeName(e.target.value)}
+              onChange={(e) => setEmployeeName(e.target.value)}
               className="form-control"
               required
             />
           </div>
           <div className="mb-2">
-            <label htmlFor="employeeRole" className="form-label">Role</label>
+            <label htmlFor="employeeRole" className="form-label">
+              Role
+            </label>
             <input
               id="employeeRole"
               type="text"
               value={employeeRole}
-              onChange={e => setEmployeeRole(e.target.value)}
+              onChange={(e) => setEmployeeRole(e.target.value)}
               className="form-control"
               required
             />
           </div>
           <div className="mb-2">
-            <label htmlFor="employeeFavReward" className="form-label">Perk</label>
+            <label htmlFor="employeeFavReward" className="form-label">
+              Perk
+            </label>
             <input
               id="employeeFavReward"
               type="text"
               value={employeeFavReward}
-              onChange={e => setEmployeeFavReward(e.target.value)}
+              onChange={(e) => setEmployeeFavReward(e.target.value)}
               className="form-control"
               required
             />
           </div>
           <div className="mb-2">
-            <label htmlFor="employeeDescription" className="form-label">Description</label>
+            <label htmlFor="employeeDescription" className="form-label">
+              Description
+            </label>
             <textarea
               id="employeeDescription"
               rows={3}
               value={employeeDescription}
-              onChange={e => setEmployeeDescription(e.target.value)}
+              onChange={(e) => setEmployeeDescription(e.target.value)}
               className="form-control"
               required
             />
