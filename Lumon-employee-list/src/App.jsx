@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import viteLogo from 'vite.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { nanoid } from 'nanoid';
@@ -13,7 +13,7 @@ function App() {
   const Employees = [
     {
       id: nanoid(),
-      employeeImage: '/images/employee1.jpg',
+      employeeImage: 'images/employee1.jpg',
       employeeName: 'Mark Scout',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Waffle Party',
@@ -22,7 +22,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee2.jpg',
+      employeeImage: 'images/employee2.jpg',
       employeeName: 'Helly R.',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Freedom',
@@ -31,7 +31,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee3.jpg',
+      employeeImage: 'images/employee3.jpg',
       employeeName: 'Irving Bailiff',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Painting the break room',
@@ -40,7 +40,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee4.jpg',
+      employeeImage: 'images/employee4.jpg',
       employeeName: 'Dylan G.',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Finger traps and perks',
@@ -49,7 +49,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee5.jpg',
+      employeeImage: 'images/employee5.jpg',
       employeeName: 'Harmony Cobel',
       employeeRole: 'Floor Manager',
       employeeFavReward: 'Obedience',
@@ -58,7 +58,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee6.jpg',
+      employeeImage: 'images/employee6.jpg',
       employeeName: 'Mr. Milchick',
       employeeRole: 'Floor Supervisor',
       employeeFavReward: 'Compliance through celebration',
@@ -67,7 +67,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee7.jpg',
+      employeeImage: 'images/employee7.jpg',
       employeeName: 'Burt Goodman',
       employeeRole: 'Optics and Design',
       employeeFavReward: 'Walks with Irving',
@@ -76,7 +76,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee8.jpg',
+      employeeImage: 'images/employee8.jpg',
       employeeName: 'Natalie',
       employeeRole: 'Lumon PR',
       employeeFavReward: 'Control over public narrative',
@@ -85,7 +85,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee9.jpg',
+      employeeImage: 'images/employee9.jpg',
       employeeName: 'Casey',
       employeeRole: 'Security & Interrogation Supervisor',
       employeeFavReward: 'Confession Compliance',
@@ -94,7 +94,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee10.jpg',
+      employeeImage: 'images/employee10.jpg',
       employeeName: 'Mark W.',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Five Percent Bonus Certificate',
@@ -103,7 +103,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee11.jpg',
+      employeeImage: 'images/employee11.jpg',
       employeeName: 'Gwendolyn Y.',
       employeeRole: 'Macrodata Refinement',
       employeeFavReward: 'Lumon Enlightenment Retreat',
@@ -112,7 +112,7 @@ function App() {
     },
     {
       id: nanoid(),
-      employeeImage: '/images/employee12.jpg',
+      employeeImage: 'images/employee12.jpg',
       employeeName: 'Jame Eagan',
       employeeRole: 'Chief Executive Officer',
       employeeFavReward: 'Legacy Fulfillment',
@@ -140,13 +140,13 @@ function App() {
             <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
               <img
                 className="bi me-2"
-                src="/images/lumonlogo.jpg"
+                src="images/lumonlogo.jpg"
                 alt="Lumon Logo"
                 width="80"
                 height="50"
                 role="img"
                 style={{ borderRadius: '25px' }}
-              ></img>
+              />
             </a>
 
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -169,7 +169,7 @@ function App() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img src="/images/milchick.png" alt="mdo" width="32" height="32" className="rounded-circle" />
+                <img src="images/milchick.png" alt="mdo" width="32" height="32" className="rounded-circle" />
               </a>
             </div>
           </div>
@@ -195,7 +195,7 @@ function App() {
                         <em>
                           <b>Role at Lumon</b>
                         </em>
-                        <br></br>
+                        <br />
                         {employee.employeeRole}
                       </li>
                       <li className="list-group-item">{employee.employeeDescription}</li>
@@ -203,7 +203,7 @@ function App() {
                         <em>
                           <b>Employees Favorite Perk</b>
                         </em>
-                        <br></br>
+                        <br />
                         {employee.employeeFavReward}
                       </li>
                     </ul>
@@ -247,6 +247,6 @@ function App() {
 }
 
 document.body.style =
-  'background-image: url(/images/lumon.jpg); background-repeat: no-repeat; background-size: contain; background-color: #102230';
+  'background-image: url(images/lumon.jpg); background-repeat: no-repeat; background-size: contain; background-color: #102230';
 
 export default App;
