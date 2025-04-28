@@ -3,6 +3,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { nanoid } from 'nanoid';
 import AddEmployee from './AddEmployee';
+import { useEffect } from 'react';
+import Employee from './Employee';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
   const Employees = [
@@ -105,26 +109,69 @@ function App() {
       employeeDescription:
         'Innovative MDR consultant who brings proactive solutions and fresh perspectives to optimize workflow efficiency.',
     },
-    {
-      id: nanoid(),
-      employeeImage: 'images/employee12.jpg',
-      employeeName: 'Jame Eagan',
-      employeeRole: 'Chief Executive Officer',
-      employeeFavReward: 'Legacy Fulfillment',
-      employeeDescription:
-        'Visionary CEO who leads with integrity, drives corporate strategy, and ensures operational excellence across all departments.',
-    },
   ];
 
   const [allEmployees, setAllEmployees] = useState(Employees);
+  const [searchResults, setSearchResults] = useState(null);
+  const [keywords, setKeywords] = useState('');
 
+  // loads employee array when the page loads
+  useEffect(() => {
+    saveEmployees(Employees);
+  }, []);
+
+  const saveEmployees = (Employees) => {
+    setAllEmployees(Employees);
+    setSearchResults(Employees);
+  };
+
+  // search logic function
+  const searchEmployees = () => {
+    let keywordsArray = [];
+
+    if (keywords) {
+      keywordsArray = keywords.toLowerCase().split(` `);
+    }
+
+    if (keywordsArray.length > 0) {
+      const searchResults = allEmployees.filter((employee) => {
+        for (const word of keywordsArray) {
+          if (
+            // checks for name, role, and perk (not desc since it has so many words)
+            employee.employeeName.toLowerCase().includes(word) ||
+            employee.employeeRole.toLowerCase().includes(word) ||
+            employee.employeeFavReward.toLowerCase().includes(word)
+          ) {
+            return true;
+          }
+        }
+        return false;
+      });
+      setSearchResults(searchResults);
+    } else {
+      setSearchResults(allEmployees);
+    }
+  };
+
+  const removeEmployee = (employeeToDelete) => {
+    const updatedEmployeesArray = allEmployees.filter((employee) => employee.id !== employeeToDelete.id);
+    saveEmployees(updatedEmployeesArray);
+  };
+
+  const updateEmployee = (updatedEmployee) => {
+    const updatedEmployeesArray = allEmployees.map(employee => employee.id === updatedEmployee.id ? {...employee,...updatedEmployee} : employee)
+    saveEmployees(updatedEmployeesArray);
+  }
+
+  // handles if the modal is showing
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
+  // appends new employee to the end of the array and updates the site.
   const addEmployee = (newEmployee) => {
     const updatedEmployees = [...allEmployees, newEmployee];
-    setAllEmployees(updatedEmployees);
+    saveEmployees(updatedEmployees);
   };
 
   return (
@@ -152,8 +199,25 @@ function App() {
               </li>
             </ul>
 
-            <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-              <input type="search" className="form-control" placeholder="Search..." aria-label="Search" />
+            <form
+              className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+              onSubmit={(e) => {
+                e.preventDefault(); // stops the page from refreshing (since I have a useEffect that gets called on page load it would override the search)
+                searchEmployees();
+              }}
+            >
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Search..."
+                aria-label="Search"
+                onChange={(e) => setKeywords(e.target.value)} // constantly keeps the search keywords updated
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    searchEmployees();
+                  }
+                }}
+              />
             </form>
 
             <div className="dropdown text-end">
@@ -174,35 +238,10 @@ function App() {
       <main>
         <div className="container">
           <div className="row">
-            {allEmployees &&
-              allEmployees.map((employee) => (
+            {searchResults &&
+              searchResults.map((employee) => (
                 <div className="col-lg-3" style={{ padding: '1em' }} key={employee.id}>
-                  <div className="card" style={{ width: `18rem`, height: `47rem` }}>
-                    <img
-                      className="card-img-top"
-                      src={employee.employeeImage}
-                      alt="Excellent Employee"
-                      style={{ border: '5px solid black' }}
-                    />
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item">{employee.employeeName}</li>
-                      <li className="list-group-item">
-                        <em>
-                          <b>Role at Lumon</b>
-                        </em>
-                        <br />
-                        {employee.employeeRole}
-                      </li>
-                      <li className="list-group-item">{employee.employeeDescription}</li>
-                      <li className="list-group-item">
-                        <em>
-                          <b>Employees Favorite Perk</b>
-                        </em>
-                        <br />
-                        {employee.employeeFavReward}
-                      </li>
-                    </ul>
-                  </div>
+                  <Employee employee={employee} removeEmployee={removeEmployee} updateEmployee={updateEmployee}/>
                 </div>
               ))}
             <div className="col-lg-3" style={{ padding: '1em' }}>
@@ -211,7 +250,7 @@ function App() {
                 className="card add-card-btn"
                 style={{
                   width: `18rem`,
-                  height: `47rem`,
+                  height: `50rem`,
                   border: `2px dashes rgba(0,0,0,0.2)`,
                   padding: 0,
                   backgroundColor: `lightblue`,
@@ -219,7 +258,7 @@ function App() {
                 onClick={handleShow}
               >
                 <div className="card-body d-flex justify-content-center align-items-center">
-                  <span className="add-icon">+ Add Employee</span>
+                  <span className="add-icon"><FontAwesomeIcon icon={faPlusCircle} /> Add Employee</span>
                 </div>
               </button>
             </div>
@@ -236,7 +275,14 @@ function App() {
         }}
       />
 
-      <footer></footer>
+      <footer className="py-3 my-4">
+        <p className="nav justify-content-center border-bottom pb-3 mb-3">
+          <em>
+            From the TV Show <b>"Severance"</b>
+          </em>
+        </p>
+        <p className="text-center text-body-secondary">&copy; 2025 Created by Hayden</p>
+      </footer>
     </div>
   );
 }

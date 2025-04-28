@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+
 function AddEmployee({ show, onClose, addEmployee }) {
   // id, image, name, role, reward, desc
   const [employeeImage, setEmployeeImage] = useState(null);
@@ -38,6 +39,7 @@ function AddEmployee({ show, onClose, addEmployee }) {
     doWork();
   };
 
+  // this is code for the react-bootstrap modal (particularly the version when creating a new employee)
   return (
     <Modal show={show} onHide={onClose} centered>
       <Modal.Header closeButton>
