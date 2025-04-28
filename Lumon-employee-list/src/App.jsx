@@ -5,8 +5,8 @@ import { nanoid } from 'nanoid';
 import AddEmployee from './AddEmployee';
 import { useEffect } from 'react';
 import Employee from './Employee';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const Employees = [
@@ -111,14 +111,22 @@ function App() {
     },
   ];
 
-  const [allEmployees, setAllEmployees] = useState(Employees);
-  const [searchResults, setSearchResults] = useState(null);
+  const [allEmployees, setAllEmployees] = useState(() => {
+    const saved = window.localStorage.getItem('lumonEmployees');
+    return saved ? JSON.parse(saved) : Employees;
+  });
+
+  const [searchResults, setSearchResults] = useState(() => {
+    const saved = window.localStorage.getItem('lumonEmployees');
+    return saved ? JSON.parse(saved) : Employees;
+  });
+
   const [keywords, setKeywords] = useState('');
 
   // loads employee array when the page loads
   useEffect(() => {
-    saveEmployees(Employees);
-  }, []);
+    window.localStorage.setItem('lumonEmployees', JSON.stringify(allEmployees));
+  }, [allEmployees]);
 
   const saveEmployees = (Employees) => {
     setAllEmployees(Employees);
@@ -159,9 +167,11 @@ function App() {
   };
 
   const updateEmployee = (updatedEmployee) => {
-    const updatedEmployeesArray = allEmployees.map(employee => employee.id === updatedEmployee.id ? {...employee,...updatedEmployee} : employee)
+    const updatedEmployeesArray = allEmployees.map((employee) =>
+      employee.id === updatedEmployee.id ? { ...employee, ...updatedEmployee } : employee
+    );
     saveEmployees(updatedEmployeesArray);
-  }
+  };
 
   // handles if the modal is showing
   const [show, setShow] = useState(false);
@@ -241,7 +251,7 @@ function App() {
             {searchResults &&
               searchResults.map((employee) => (
                 <div className="col-lg-3" style={{ padding: '1em' }} key={employee.id}>
-                  <Employee employee={employee} removeEmployee={removeEmployee} updateEmployee={updateEmployee}/>
+                  <Employee employee={employee} removeEmployee={removeEmployee} updateEmployee={updateEmployee} />
                 </div>
               ))}
             <div className="col-lg-3" style={{ padding: '1em' }}>
@@ -251,14 +261,16 @@ function App() {
                 style={{
                   width: `18rem`,
                   height: `50rem`,
-                  border: `2px dashes rgba(0,0,0,0.2)`,
+                  border: `2px dashed rgba(0,0,0,0.2)`,
                   padding: 0,
                   backgroundColor: `lightblue`,
                 }}
                 onClick={handleShow}
               >
                 <div className="card-body d-flex justify-content-center align-items-center">
-                  <span className="add-icon"><FontAwesomeIcon icon={faPlusCircle} /> Add Employee</span>
+                  <span className="add-icon">
+                    <FontAwesomeIcon icon={faPlusCircle} /> Add Employee
+                  </span>
                 </div>
               </button>
             </div>
